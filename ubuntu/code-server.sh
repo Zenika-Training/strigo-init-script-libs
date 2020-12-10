@@ -29,3 +29,6 @@ if [ $USER = ubuntu ]; then
   echo
 fi
 EOF
+
+# Install extensions
+#sudo -iu ubuntu code-server code-server --install-extension ...

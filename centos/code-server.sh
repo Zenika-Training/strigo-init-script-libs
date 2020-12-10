@@ -29,3 +29,6 @@ if [ $USER = centos ]; then
   echo
 fi
 EOF
+
+# Install extensions
+#sudo -iu centos code-server code-server --install-extension ...
