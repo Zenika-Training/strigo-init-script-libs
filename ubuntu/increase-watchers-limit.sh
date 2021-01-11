@@ -1,5 +1,5 @@
 #!/bin/bash
 
-# increase watchers limit to 524288
-echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-sudo sysctl -p
+# Increase filesystem watches for `autoreload` (https://www.npmjs.com/package/autoreload#troubleshooting)
+echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
+sysctl -p
