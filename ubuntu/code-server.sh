@@ -11,7 +11,7 @@ apt-get install -y /tmp/code-server.deb
 # Setup code-server
 mkdir --parent /home/ubuntu/.config/code-server/
 cat <<EOF > /home/ubuntu/.config/code-server/config.yaml
-bind-addr: {{ .STRIGO_RESOURCE_0_DNS }}:9999
+bind-addr: {{ .STRIGO_RESOURCE_DNS }}:9999
 auth: password
 password: '{{ .STRIGO_WORKSPACE_ID }}'
 disable-telemetry: true
