@@ -26,3 +26,5 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # Enable user to use Docker
 usermod -aG docker ubuntu
+# Force restart tmux session to reload groups
+killall -9 /home/ubuntu/.strigo/tmux

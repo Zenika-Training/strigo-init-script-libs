@@ -33,3 +33,5 @@ systemctl start docker
 
 # Enable user to use Docker
 usermod -aG docker centos
+# Force restart tmux session to reload groups
+killall -9 /home/centos/.strigo/tmux
