@@ -4,9 +4,7 @@
 # ----------------------------------------------------------------------------------------------------
 
 apt-get update
-apt-get install -y apache2
-systemctl start apache2
-systemctl enable --now apache2
+apt-get install -y nginx
 usermod -a -G www-data ubuntu
 chown -R ubuntu:www-data /var/www
 chmod 2775 /var/www
