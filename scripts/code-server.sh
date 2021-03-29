@@ -9,6 +9,9 @@ set -e
 # code_server_version=3.7.2
 # - the code-server extensions to install (space-separated names)
 # code_server_extensions="ms-azuretools.vscode-docker coenraads.bracket-pair-colorizer-2"
+# - the JSON content of code-server settings (here, to make the terminal a JSON shell)
+# (see https://code.visualstudio.com/docs/editor/integrated-terminal#_shell-arguments)
+# code_server_settings='{ "terminal.integrated.shellArgs.linux": ["-l"]}'
 
 # https://github.com/cdr/code-server/blob/master/doc/install.md#debian-ubuntu
 
@@ -48,4 +51,10 @@ if [[ $code_server_extensions && ${code_server_extensions-_} ]]; then
   for code_server_extension in ${code_server_extensions_array[@]}; do
     sudo -iu ubuntu code-server code-server --install-extension ${code_server_extension}
   done
+fi
+
+# Adds user settings, if any
+if [[ $code_server_settings && ${code_server_settings-_} ]]; then
+  echo $code_server_settings > /home/ubuntu/.local/share/code-server/User/settings.json
+  chown ubuntu:ubuntu /home/ubuntu/.local/share/code-server/User/settings.json
 fi
