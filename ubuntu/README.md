@@ -66,3 +66,5 @@ EOF
 ```
 
 Without the `\` in front of `EOF`, `$HOME` and `$PATH` would be interpreted before the addition of the content to `~/.bashrc`
+
+* if you use a docker extension to handle repositories, images & containers in code-server, make sure that you install docker prior to installing code-server in your strigo script: in this case the ubuntu user is already in the docker group when code-server is launched
