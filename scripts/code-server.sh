@@ -47,7 +47,7 @@ fi
 EOF
 
 # Install extensions, if any
-if [[ $code_server_extensions && ${code_server_extensions-_} ]]; then
+if [[ ${code_server_extensions} && ${code_server_extensions-_} ]]; then
   code_server_extensions_array=($code_server_extensions)
   for code_server_extension in ${code_server_extensions_array[@]}; do
     sudo -iu ubuntu code-server code-server --install-extension ${code_server_extension}
