@@ -55,7 +55,7 @@ if [[ ${code_server_extensions} && ${code_server_extensions-_} ]]; then
 fi
 
 # Adds user settings, if any
-if [[ $code_server_settings && ${code_server_settings-_} ]]; then
-  echo $code_server_settings > /home/ubuntu/.local/share/code-server/User/settings.json
+if [[ ${code_server_settings} && ${code_server_settings-_} ]]; then
+  echo ${code_server_settings} > /home/ubuntu/.local/share/code-server/User/settings.json
   chown ubuntu:ubuntu /home/ubuntu/.local/share/code-server/User/settings.json
 fi
