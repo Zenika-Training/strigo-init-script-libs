@@ -21,7 +21,7 @@ If your script allows some form of customization (version to install, extension 
 
 ```sh
 # Install code-server (default values)
-code_server_version=${code_server_version-3.9.2}
+code_server_version=${code_server_version:-3.9.2}
 curl -fsSLo /tmp/code-server.deb "https://github.com/cdr/code-server/releases/download/v${code_server_version}/code-server_${code_server_version}_amd64.deb"
 
 # [...]
