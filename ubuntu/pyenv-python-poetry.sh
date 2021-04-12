@@ -9,8 +9,8 @@
 # - the path to the labs folder, where the python version will be activated
 # labs_path=/home/ubuntu/labs_python
 
-python_version=3.8.6
-poetry_version=1.1.5
+python_version=${python_version:-3.8.6}
+poetry_version=${poetry_version:-1.1.5}
 labs_path=/home/ubuntu/labs_python
 # PYENV
 # - installs pyenv prerequisites (see https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
