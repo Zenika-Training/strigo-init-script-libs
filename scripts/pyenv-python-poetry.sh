@@ -9,9 +9,6 @@
 # - the path to the labs folder, where the python version will be activated
 # labs_path=/home/ubuntu/labs_python
 
-python_version=${python_version:-3.8.6}
-poetry_version=${poetry_version:-1.1.5}
-labs_path=/home/ubuntu/labs_python
 # PYENV
 # - installs pyenv prerequisites (see https://github.com/pyenv/pyenv/wiki#suggested-build-environment)
 apt-get update && apt-get install -y  --no-install-recommends \
@@ -42,20 +39,20 @@ chmod +x /etc/profile.d/bashrc_python.sh
 source /etc/profile.d/bashrc_python.sh
 
 # Installs the PYTHON version system-wise (so that poetry will be installed with it)
-python_version=${python_version-3.8.6}
+python_version=${python_version:-3.8.6}
 pyenv install ${python_version}
 pyenv global ${python_version}
 chown -R ubuntu:ubuntu /home/ubuntu/.pyenv/
 
 # Creates the labs directory and activates the chosen Python version
-labs_path=${labs_path-/home/ubuntu/labs_python}
+labs_path=${labs_path:-/home/ubuntu/labs_python}
 mkdir -p "${labs_path}"
 cd "${labs_path}" && pyenv local ${python_version} && cd ~/
 chown -R ubuntu:ubuntu "${labs_path}"
 
 # Installs POETRY with the specified python version, if defined
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py > ~/get-poetry.py
-if [[ $poetry_version && ${poetry_version-_} ]]; then
+if [[ ${poetry_version} && ${poetry_version-_} ]]; then
   POETRY_HOME=/home/ubuntu/.poetry python get-poetry.py -y --version $poetry_version
 else
   POETRY_HOME=/home/ubuntu/.poetry python get-poetry.py -y
