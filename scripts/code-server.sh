@@ -20,7 +20,7 @@ apt-get install -y curl
 
 # Install code-server
 apt-get install -y curl
-code_server_version=${code_server_version-3.9.2}
+code_server_version=${code_server_version:-3.9.2}
 curl -fsSLo /tmp/code-server.deb "https://github.com/cdr/code-server/releases/download/v${code_server_version}/code-server_${code_server_version}_amd64.deb"
 apt-get install -y /tmp/code-server.deb
 
