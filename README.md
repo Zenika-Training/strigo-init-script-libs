@@ -70,3 +70,5 @@ EOF
 Without the `\` in front of `EOF`, `$HOME` and `$PATH` would be interpreted before the addition of the content to `~/.bashrc`
 
 * in your final strigo script, make sure to **install docker** (which adds the ubuntu user to the docker group) **before any other service bound to interact with docker**. For example: install `code-server` after `docker` if you plan to use an extension to manage `docker` repositories, images and containers; in this case the ubuntu user is already in the `docker` group when `code-server` is launched (and the extension works properly)
+
+* The cloud-init output log file (/var/log/cloud-init-output.log) captures console output so it is easy to debug your scripts following a launch if the instance does not behave the way you intended.
