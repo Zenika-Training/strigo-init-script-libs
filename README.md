@@ -71,7 +71,7 @@ Without the `\` in front of `EOF`, `$HOME` and `$PATH` would be interpreted befo
 
 * in your final strigo script, make sure to **install docker** (which adds the ubuntu user to the docker group) **before any other service bound to interact with docker**. For example: install `code-server` after `docker` if you plan to use an extension to manage `docker` repositories, images and containers; in this case the ubuntu user is already in the `docker` group when `code-server` is launched (and the extension works properly)
 
-* the cloud-init output log files captures console outputs while the strigo labs VM is initialized, so it can help debugging your initialization script following a launch if the instance does not behave the way you intended:
+* the cloud-init output log files capture console outputs while the strigo labs VM initializes, so it can help debugging your initialization script following a launch if the instance does not behave the way you intended:
 
 ```sh
 tail -n 20 /var/log/cloud-init-output.log

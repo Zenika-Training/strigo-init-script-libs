@@ -62,6 +62,11 @@ if [[ ${code_server_extensions} && ${code_server_extensions-_} ]]; then
   code_server_extensions_array=($code_server_extensions)
   for code_server_extension in ${code_server_extensions_array[@]}; do
     sudo -iu ubuntu code-server code-server --install-extension ${code_server_extension}
+
+    if [ "${code_server_extension}" = "coenraads.bracket-pair-colorizer-2" ]; then
+      # fixes bracket colorization (https://github.com/cdr/code-server/issues/544#issuecomment-776139127) until code-server 3.11?
+      sudo ln -s /usr/lib/code-server/lib/vscode/node_modules /usr/lib/code-server/lib/vscode/node_modules.asar
+    fi
   done
 fi
 
