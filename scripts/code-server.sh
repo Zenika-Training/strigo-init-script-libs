@@ -3,7 +3,7 @@
 # failfast
 set -e
 
-# Define these 2 variables if you want to customize the default installation,
+# Define these 3 optional variables if you want to customize the default installation,
 # then copy-paste the remainder of the script:
 # - the version of code-server to install (leave undefined to install the last one)
 # code_server_version=3.7.2
@@ -14,11 +14,8 @@ set -e
 # (see https://code.visualstudio.com/docs/editor/integrated-terminal#_shell-arguments)
 # code_server_settings='{ "terminal.integrated.shellArgs.linux": ["-l"], "workbench.colorTheme": "Default Dark+"}'
 
-# https://github.com/cdr/code-server/blob/master/doc/install.md#debian-ubuntu
-
-apt-get install -y curl
-
 # Install code-server (last released version by default)
+# https://github.com/cdr/code-server/blob/main/docs/install.md#debian-ubuntu
 apt-get install -y curl
 last_code_server_release=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/cdr/code-server/releases/latest | grep -Po 'cdr/code-server/releases/tag/v\K[^"]*')
 code_server_version=${code_server_version:-${last_code_server_release}}
