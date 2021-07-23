@@ -7,6 +7,11 @@ The code-server installation and initialization script (see [code-server.sh](cod
 
 Specify the **desired version of `code-server`** by defining the `code_server_version` variable.
 Otherwise it installs the latest release.
+Example:
+
+```sh
+code_server_version='3.10.2'
+```
 
 ### Code-server extensions
 
@@ -14,6 +19,12 @@ Specify the **extensions you want to install** by defining the `code_server_exte
 Extension names are separated by the `space` character.
 
 Note: a fix is still necessary (as of version 3.10.2, included) to make the `coenraads.bracket-pair-colorizer-2` extension work with code-server, it is included at the end of the code-server installation script
+
+Example:
+
+```sh
+code_server_extensions="coenraads.bracket-pair-colorizer-2 ms-azuretools.vscode-docker jebbs.plantuml"
+```
 
 ### User settings
 
