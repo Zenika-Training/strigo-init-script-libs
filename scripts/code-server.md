@@ -7,6 +7,7 @@ The code-server installation and initialization script (see [code-server.sh](cod
 
 Specify the **desired version of `code-server`** by defining the `code_server_version` variable.
 Otherwise it installs the latest release.
+
 Example:
 
 ```sh
