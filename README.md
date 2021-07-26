@@ -1,5 +1,14 @@
 # Library of Strigo init script snippets
 
+## Use of Strigo context
+
+Strigo provides a way to inject some training session dependant variables through [Strigo context](http://help.strigo.io/en/articles/4242341-injecting-strigo-context-to-your-labs).
+
+Those are not environment variables but a very simple templating mechanism (`{{ .STRIGO_XXX }}`) rendered when creating the machines.
+
+Refer to [Variable Reference doc](http://help.strigo.io/en/articles/4242341-injecting-strigo-context-to-your-labs#variable-reference) to know the available variables and their meaning.
+
+Some of the variables can be added as environment variables through the [`strigo.sh` script](scripts/strigo.sh).
 
 ## Suggested practices to write the scripts
 
