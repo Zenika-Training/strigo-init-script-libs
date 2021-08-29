@@ -92,3 +92,4 @@ tail -n 20 /var/log/cloud-init.log
 Please refer to the following documentation files for more details about how the scripts can be customized:
 
 * [scripts/code-server.md](scripts/code-server.md)
+* [scripts/projector.md](scripts/projector.md)
