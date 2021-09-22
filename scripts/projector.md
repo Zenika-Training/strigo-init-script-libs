@@ -30,6 +30,27 @@ Example:
 projector_password="class-specific-random-password"
 ```
 
+### Projector TLS
+
+Specify the **TLS certificate paths** by defining the variables:
+
+- `projector_tls_key_path`: the path to the TLS key file
+- `projector_tls_cert_path`: the path to the TLS certificate file
+- `projector_tls_chain_path`: the path to the TLS chain file. Optional if the chain is already in the certificate file.
+
+Examples:
+
+```sh
+projector_tls_key_path="/etc/letsencrypt/live/labs.strigo.io/privkey.pem"
+projector_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/fullchain.pem"
+```
+
+```sh
+projector_tls_key_path="/etc/letsencrypt/live/labs.strigo.io/privkey.pem"
+projector_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/cert.pem"
+projector_tls_chain_path="/etc/letsencrypt/live/labs.strigo.io/chain.pem"
+```
+
 ## Projector config
 
 The script create a projector config (i.e. runnable instance) named "strigo".

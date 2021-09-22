@@ -10,6 +10,10 @@ set -e
 # projector_ide_name="IntelliJ IDEA Community Edition 2020.3.4"
 # - the password to protect access to projector (defaults to no password)
 # projector_password="class-specific-random-password"
+# - the TLS certificate paths
+# projector_tls_key_path="/etc/letsencrypt/live/labs.strigo.io/privkey.pem"
+# projector_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/fullchain.pem"
+# projector_tls_chain_path="/etc/letsencrypt/live/labs.strigo.io/chain.pem"  # optional if cert_path contains the full chain
 
 projector_ide_name=${projector_ide_name:-IntelliJ IDEA Community Edition 2020.3.4}  # Latest projector-tested IDE
 projector_config_name=strigo
@@ -29,6 +33,12 @@ password = ${projector_password}
 ro_password = ${projector_password}
 EOF
   sudo -u ubuntu projector --accept-license config rebuild "${projector_config_name}"
+fi
+if [ -n "${projector_tls_cert_path}" ] && [ -n "${projector_tls_key_path}" ]; then
+  [ -n "${projector_tls_chain_path}" ] && chain_opt="--chain-path ${projector_tls_chain_path}"
+  sudo -u ubuntu projector install-certificate "${projector_config_name}" --certificate ${projector_tls_cert_path} --key ${projector_tls_key_path} ${chain_opt:-}
+elif [ -n "${projector_tls_cert_path}" ] || [ -n "${projector_tls_chain_path}" ]; then
+  echo "One of TLS key or cert is missing, skipping TLS configuration" >&2
 fi
 
 # Create, enable and start projector config service
