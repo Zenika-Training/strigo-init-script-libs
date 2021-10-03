@@ -11,7 +11,10 @@ set -e
 # code_server_extensions="ms-azuretools.vscode-docker coenraads.bracket-pair-colorizer-2"
 # Note: install code-server after installing docker if you plan to use a docker extension
 # - the JSON content of code-server settings (here, to preset a dark theme)
-# code_server_settings='{"workbench.colorTheme": "Default Dark+"}'
+# code_server_settings='{"workbench.startupEditor": "none", "workbench.colorTheme": "Default Dark+"}'
+# - the TLS certificate paths
+# code_server_tls_key_path="/etc/letsencrypt/live/labs.strigo.io/privkey.pem"
+# code_server_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/fullchain.pem"
 
 # Install code-server (last released version by default)
 # https://github.com/cdr/code-server/blob/main/docs/install.md#debian-ubuntu
@@ -29,6 +32,14 @@ auth: password
 password: '{{ .STRIGO_WORKSPACE_ID }}'
 disable-telemetry: true
 EOF
+if [ -n "${code_server_tls_cert_path}" ] && [ -n "${code_server_tls_key_path}" ]; then
+  cat << EOF >> /home/ubuntu/.config/code-server/config.yaml
+cert: ${code_server_tls_cert_path}
+cert-key: ${code_server_tls_key_path}
+EOF
+elif [ -n "${code_server_tls_cert_path}" ] || [ -n "${code_server_tls_chain_path}" ]; then
+  echo "One of TLS key or cert is missing, skipping TLS configuration" >&2
+fi
 chown -R ubuntu: /home/ubuntu/.config/
 
 # Enable and start code-server

@@ -14,6 +14,20 @@ Example:
 code_server_version='3.10.2'
 ```
 
+### Code-server TLS
+
+Specify the **TLS certificate paths** by defining the variables:
+
+- `code_server_tls_key_path`: the path to the TLS key file
+- `code_server_tls_cert_path`: the path to the TLS certificate file. MUST contains the certification chain if any of the CA certificates is not trusted by default.
+
+Example:
+
+```sh
+code_server_tls_key_path="/etc/letsencrypt/live/labs.strigo.io/privkey.pem"  # Or simply ${TLS_PRIVKEY}
+code_server_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/fullchain.pem"  # Or simply ${TLS_FULLCHAIN}
+```
+
 ### Code-server extensions
 
 Specify the **extensions you want to install** by defining the `code_server_extensions` variable.
