@@ -30,6 +30,17 @@ Example:
 projector_password="class-specific-random-password"
 ```
 
+### Projector port
+
+Specify the **listening port of Projector** by defining the `projector_port` variable.
+Otherwise it listen on `9999`.
+
+Example:
+
+```sh
+projector_port=8888
+```
+
 ### Projector TLS
 
 Specify the **TLS certificate paths** by defining the variables:
