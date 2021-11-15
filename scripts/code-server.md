@@ -14,6 +14,17 @@ Example:
 code_server_version='3.10.2'
 ```
 
+### Code-server port
+
+Specify the **listening port of `code-server`** by defining the `code_server_port` variable.
+Otherwise it listen on `9999`.
+
+Example:
+
+```sh
+code_server_port=8888
+```
+
 ### Code-server TLS
 
 Specify the **TLS certificate paths** by defining the variables:

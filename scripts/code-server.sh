@@ -7,6 +7,8 @@ set -e
 # then copy-paste the remainder of the script:
 # - the version of code-server to install (leave undefined to install the last one)
 # code_server_version=3.7.2
+# - the port of code-server (default: 9999)
+# code_server_port=9999
 # - the code-server extensions to install (space-separated names)
 # code_server_extensions="ms-azuretools.vscode-docker coenraads.bracket-pair-colorizer-2"
 # Note: install code-server after installing docker if you plan to use a docker extension
@@ -27,7 +29,7 @@ apt-get install -y /tmp/code-server.deb
 # Setup code-server
 mkdir --parent /home/ubuntu/.config/code-server/
 cat << EOF > /home/ubuntu/.config/code-server/config.yaml
-bind-addr: {{ .STRIGO_RESOURCE_DNS }}:9999
+bind-addr: {{ .STRIGO_RESOURCE_DNS }}:${code_server_port:-9999}
 auth: password
 password: '{{ .STRIGO_WORKSPACE_ID }}'
 disable-telemetry: true
