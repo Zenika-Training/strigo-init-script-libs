@@ -8,7 +8,16 @@ Those are not environment variables but a very simple templating mechanism (`{{ 
 
 Refer to [Variable Reference doc](http://help.strigo.io/en/articles/4242341-injecting-strigo-context-to-your-labs#variable-reference) to know the available variables and their meaning.
 
-Some of the variables can be added as environment variables through the [`strigo.sh` script](scripts/strigo.sh).
+Some of the variables can be added as environment variables through the [`strigo.sh` script](scripts/strigo.sh) or [`strigo.ps1` Windows script](win_scripts/strigo.ps1).
+
+## Windows machine
+
+You need to start and end the init script in Strigo by `<powershell>` and `</powershell>` respectively. \
+Or you can set `is_windows: true` in `strigo.json` if you use [`ztraining2strigo`](https://github.com/Zenika-Training/ztraining2strigo).
+
+Use the script [`chocolatey.ps1`](win_scripts/chocolatey.ps1) to install chocolatey. \
+You can then install any [available chocolatey package](https://community.chocolatey.org/packages) with the command `choco install <package_name>`. \
+There are already available [`vscode.ps1`](win_scripts/vscode.ps1) for VSCode and [`intellijidea.ps1`](win_scripts/intellijidea.ps1) for IntelliJIDEA.
 
 ## Suggested practices to write the scripts
 
