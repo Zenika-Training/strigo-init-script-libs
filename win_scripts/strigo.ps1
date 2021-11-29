@@ -1,5 +1,4 @@
-# Install https://www.powershellgallery.com/packages/AWS.Tools.EC2 to have 'Get-EC2InstanceMetadata'
-Install-Module -Name AWS.Tools.EC2
+# Prerequisite: AWS EC2 Tools for 'Get-EC2InstanceMetadata', already installed in Strigo Windows Server 2016
 
 # Inject Strigo context
 [System.Environment]::SetEnvironmentVariable("INSTANCE_NAME", "{{ .STRIGO_RESOURCE_NAME }}", [System.EnvironmentVariableTarget]::Machine)
