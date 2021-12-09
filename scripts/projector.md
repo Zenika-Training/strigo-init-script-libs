@@ -33,7 +33,7 @@ projector_password="class-specific-random-password"
 ### Projector port
 
 Specify the **listening port of Projector** by defining the `projector_port` variable.
-Otherwise it listen on `9999`.
+Otherwise it listen on `9998`.
 
 Example:
 
@@ -78,11 +78,11 @@ You are free to add other projector configs, see https://github.com/JetBrains/pr
 
 ## Access URL
 
-If you did set a password, you need to add the query parameter `token`: <http://instance.autolab.strigo.io:9999?token=password-value>
+If you did set a password, you need to add the query parameter `token`: <http://instance.autolab.strigo.io:9998?token=password-value>
 
 To avoid warning when opening projector in browser, best to add the query parameter `notSecureWarning=false`:
-- <http://instance.autolab.strigo.io:9999?notSecureWarning=false>
-- <http://instance.autolab.strigo.io:9999?notSecureWarning=false&token=password-value>
+- <http://instance.autolab.strigo.io:9998?notSecureWarning=false>
+- <http://instance.autolab.strigo.io:9998?notSecureWarning=false&token=password-value>
 
 ## Accept Privacy Policy in Strigo
 

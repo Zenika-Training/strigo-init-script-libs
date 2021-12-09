@@ -3,15 +3,15 @@
 # failfast
 set -e
 
-# Define these 2 optional variables if you want to customize the default installation,
+# Define these optional variables if you want to customize the default installation,
 # then copy-paste the remainder of the script:
 # - the name of the IDE to install (defaults to "IntelliJ IDEA Community Edition 2020.3.4")
 # Note: to get the list of available IDEs, launch `projector find`
 # projector_ide_name="IntelliJ IDEA Community Edition 2020.3.4"
 # - the password to protect access to projector (defaults to no password)
 # projector_password="class-specific-random-password"
-# - the port of projector (defaults to 9999)
-# projector_port=9999
+# - the port of projector (defaults to 9998)
+# projector_port=9998
 # - the TLS certificate paths
 # projector_tls_key_path="/etc/letsencrypt/live/labs.strigo.io/privkey.pem"
 # projector_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/fullchain.pem"
@@ -27,7 +27,7 @@ apt-get install -y --no-install-recommends python3 python3-pip python3-cryptogra
 pip3 install projector-installer
 
 # Setup projector
-sudo -u ubuntu projector --accept-license ide autoinstall --config-name "${projector_config_name}" --ide-name "${projector_ide_name}" --hostname {{ .STRIGO_RESOURCE_DNS }} --port ${projector_port:-9999}
+sudo -u ubuntu projector --accept-license ide autoinstall --config-name "${projector_config_name}" --ide-name "${projector_ide_name}" --hostname {{ .STRIGO_RESOURCE_DNS }} --port ${projector_port:-9998}
 if [ -n "${projector_password}" ]; then
   cat << EOF >> ~ubuntu/.projector/configs/${projector_config_name}/config.ini
 [PASSWORDS]
