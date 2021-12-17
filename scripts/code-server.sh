@@ -19,11 +19,11 @@ set -e
 # code_server_tls_cert_path="/etc/letsencrypt/live/labs.strigo.io/fullchain.pem"
 
 # Install code-server (last released version by default)
-# https://github.com/cdr/code-server/blob/main/docs/install.md#debian-ubuntu
+# https://github.com/coder/code-server/blob/main/docs/install.md#debian-ubuntu
 apt-get install -y curl
-last_code_server_release=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/cdr/code-server/releases/latest | grep -Po 'cdr/code-server/releases/tag/v\K[^"]*')
+last_code_server_release=$(curl -sL -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/coder/code-server/releases/latest | grep -Po '/code-server/releases/tag/v\K[^"]*')
 code_server_version=${code_server_version:-${last_code_server_release}}
-curl -fsSLo /tmp/code-server.deb "https://github.com/cdr/code-server/releases/download/v${code_server_version}/code-server_${code_server_version}_amd64.deb"
+curl -fsSLo /tmp/code-server.deb "https://github.com/coder/code-server/releases/download/v${code_server_version}/code-server_${code_server_version}_amd64.deb"
 apt-get install -y /tmp/code-server.deb
 
 # Setup code-server
@@ -79,7 +79,7 @@ if [[ ${code_server_extensions} && ${code_server_extensions-_} ]]; then
     sudo -iu ubuntu code-server --install-extension ${code_server_extension}
 
     if [ "${code_server_extension}" = "coenraads.bracket-pair-colorizer-2" ]; then
-      # fixes bracket colorization (https://github.com/cdr/code-server/issues/544#issuecomment-776139127) until code-server 3.11?
+      # fixes bracket colorization (https://github.com/coder/code-server/issues/544#issuecomment-776139127) until code-server 3.11?
       sudo ln -s /usr/lib/code-server/lib/vscode/node_modules /usr/lib/code-server/lib/vscode/node_modules.asar
     fi
   done

@@ -12,7 +12,7 @@ set -e
 # https://docs.docker.com/compose/install/
 
 apt-get install -y curl
-last_docker_compose_release=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/docker/compose/releases/latest | grep -Po 'docker/compose/releases/tag/v\K[^"]*')
+last_docker_compose_release=$(curl -sL -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/docker/compose/releases/latest | grep -Po 'docker/compose/releases/tag/v\K[^"]*')
 docker_compose_version=${docker_compose_version:-${last_docker_compose_release}}
 
 if [ ${docker_compose_version%%.*} -ge 2 ]; then
