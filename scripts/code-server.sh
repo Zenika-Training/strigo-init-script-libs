@@ -87,6 +87,10 @@ fi
 
 # Adds user settings, if any
 if [[ ${code_server_settings} && ${code_server_settings-_} ]]; then
+  mkdir --parent /home/ubuntu/.local/share/code-server/User/
   echo ${code_server_settings} > /home/ubuntu/.local/share/code-server/User/settings.json
-  chown ubuntu:ubuntu /home/ubuntu/.local/share/code-server/User/settings.json
+  chown -R ubuntu: /home/ubuntu/.local/
 fi
+
+# Force restart tmux session to reload terminal
+killall -9 /home/ubuntu/.strigo/tmux
