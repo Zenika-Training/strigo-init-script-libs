@@ -17,3 +17,4 @@ export PRIVATE_DNS={{ .STRIGO_RESOURCE_DNS }}
 export PRIVATE_IP=$(ec2metadata --local-ipv4)
 export HOSTNAME='{{ .STRIGO_RESOURCE_NAME }}'
 EOF
+. /etc/profile.d/00_strigo_context.sh
