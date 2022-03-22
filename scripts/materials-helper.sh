@@ -8,8 +8,7 @@ GDOWN_RETRY_MAX=5
 function gdown {
   local retries=${GDOWN_RETRY_MAX}
   until [ ${retries} -lt 1 ]; do
-    command gdown $@
-    if [ $? -eq 0 ]; then
+    if command gdown $@; then
       break
     fi
     retries=$(( retries - 1 ))
