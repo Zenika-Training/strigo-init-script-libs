@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt-get install -y --no-install-recommends python3 python3-pip
+apt-get install -y --no-install-recommends unzip python3 python3-pip
 pip3 install gdown
 
 GDOWN_RETRY_MAX=5
