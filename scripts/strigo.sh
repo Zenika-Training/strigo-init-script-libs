@@ -5,6 +5,7 @@ hostnamectl set-hostname '{{ .STRIGO_RESOURCE_NAME }}'
 sed --in-place "0,/^127.0.0.1/s/$/ $(hostnamectl status --static) $(hostnamectl status --static).zenika.labs.strigo.io/" /etc/hosts
 
 # Install https://github.com/canonical/cloud-utils to have 'ec2metadata'
+apt-get update
 apt-get install -y cloud-guest-utils
 
 # Inject Strigo context

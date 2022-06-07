@@ -20,6 +20,7 @@ set -e
 
 # Install code-server (last released version by default)
 # https://github.com/coder/code-server/blob/main/docs/install.md#debian-ubuntu
+apt-get update
 apt-get install -y curl
 last_code_server_release=$(curl -sL -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/coder/code-server/releases/latest | grep -Po '/code-server/releases/tag/v\K[^"]*')
 code_server_version=${code_server_version:-${last_code_server_release}}
