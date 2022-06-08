@@ -11,6 +11,7 @@ set -e
 # Install docker-compose (last released version by default)
 # https://docs.docker.com/compose/install/
 
+apt-get update
 apt-get install -y curl
 last_docker_compose_release=$(curl -sL -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/docker/compose/releases/latest | grep -Po 'docker/compose/releases/tag/v\K[^"]*')
 docker_compose_version=${docker_compose_version:-${last_docker_compose_release}}
