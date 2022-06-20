@@ -2,10 +2,16 @@
 
 # Install certbot
 apt-get update
-apt-get install -y certbot acl
+apt-get install -y --no-install-recommends certbot acl
 
 # Create certificate
-certbot certonly --non-interactive --agree-tos --register-unsafely-without-email --standalone --cert-name labs.strigo.io --domain {{ .STRIGO_RESOURCE_DNS }}
+if [[ -n "${ZEROSSL_EAB_KID}" && -n "${ZEROSSL_EAB_HMAC_KEY}" ]]; then
+  # https://github.com/zerossl/zerossl-bot/blob/master/zerossl-bot.sh
+  ZEROSSL_OPTS="--eab-kid '${ZEROSSL_EAB_KID}' --eab-hmac-key '${ZEROSSL_EAB_HMAC_KEY}' --server https://acme.zerossl.com/v2/DV90"
+fi
+certbot certonly --non-interactive --agree-tos --register-unsafely-without-email \
+   ${ZEROSSL_OPTS} \
+  --standalone --cert-name labs.strigo.io --domain '{{ .STRIGO_RESOURCE_DNS }}'
 
 # Give read access to ubuntu user
 setfacl --modify user:ubuntu:rX /etc/letsencrypt/{live,archive}
