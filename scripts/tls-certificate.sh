@@ -7,7 +7,7 @@ apt-get install -y --no-install-recommends certbot acl
 # Create certificate
 if [[ -n "${ZEROSSL_EAB_KID}" && -n "${ZEROSSL_EAB_HMAC_KEY}" ]]; then
   # https://github.com/zerossl/zerossl-bot/blob/master/zerossl-bot.sh
-  ZEROSSL_OPTS="--eab-kid '${ZEROSSL_EAB_KID}' --eab-hmac-key '${ZEROSSL_EAB_HMAC_KEY}' --server https://acme.zerossl.com/v2/DV90"
+  ZEROSSL_OPTS="--eab-kid ${ZEROSSL_EAB_KID} --eab-hmac-key ${ZEROSSL_EAB_HMAC_KEY} --server https://acme.zerossl.com/v2/DV90"
 fi
 certbot certonly --non-interactive --agree-tos --register-unsafely-without-email \
    ${ZEROSSL_OPTS} \
