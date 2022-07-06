@@ -3,7 +3,8 @@
 # https://docs.docker.com/engine/install/ubuntu/
 
 # Uninstall old versions
-apt-get remove -y docker docker-engine docker.io containerd runc
+dpkg --purge docker docker-engine docker.io containerd runc
+apt-get autoremove --purge -y
 apt-get update
 apt-get install -y \
     apt-transport-https \
