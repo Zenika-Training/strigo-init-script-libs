@@ -23,6 +23,19 @@ echo \
 apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
+# Enable containers log rotation and compression
+cat <<EOF > /etc/docker/daemon.json
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "5k",
+    "max-file": "3",
+    "compress": "true"
+  }
+}
+EOF
+systemctl restart docker
+
 # Enable user to use Docker
 usermod -aG docker ubuntu
 # Force restart tmux session to reload groups
