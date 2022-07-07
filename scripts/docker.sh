@@ -3,7 +3,8 @@
 # https://docs.docker.com/engine/install/ubuntu/
 
 # Uninstall old versions
-apt-get remove -y docker docker-engine docker.io containerd runc
+dpkg --purge docker docker-engine docker.io containerd runc
+apt-get autoremove --purge -y
 apt-get update
 apt-get install -y \
     apt-transport-https \
@@ -21,6 +22,19 @@ echo \
 # Install Docker Engine
 apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Enable containers log rotation and compression
+cat <<EOF > /etc/docker/daemon.json
+{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "5k",
+    "max-file": "3",
+    "compress": "true"
+  }
+}
+EOF
+systemctl restart docker
 
 # Enable user to use Docker
 usermod -aG docker ubuntu
