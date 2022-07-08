@@ -38,5 +38,5 @@ systemctl restart docker
 
 # Enable user to use Docker
 usermod -aG docker ubuntu
-# Force restart tmux session to reload groups
-killall -9 /home/ubuntu/.strigo/tmux
+# Force restart session to reload groups
+loginctl terminate-user ubuntu

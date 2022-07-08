@@ -20,5 +20,5 @@ sdk install maven $mvn_version
 sdk install gradle $gradle_version
 EOF
 
-# Force restart tmux session to reload env variable
-killall -9 /home/ubuntu/.strigo/tmux
+# Force restart session to reload env variable
+loginctl terminate-user ubuntu

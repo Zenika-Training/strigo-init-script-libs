@@ -93,5 +93,5 @@ if [[ ${code_server_settings} && ${code_server_settings-_} ]]; then
   chown -R ubuntu: /home/ubuntu/.local/
 fi
 
-# Force restart tmux session to reload terminal
-killall -9 /home/ubuntu/.strigo/tmux
+# Force restart session to reload terminal
+loginctl terminate-user ubuntu
