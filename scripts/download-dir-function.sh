@@ -8,7 +8,7 @@ downloadDir () {
     mkdir $ZIP_NAME;
     rsync -av --progress ./$DIR_NAME ./$ZIP_NAME/ --filter=':- .gitignore' > /dev/null;
     zip -r $ZIP_NAME.zip $ZIP_NAME > /dev/null;
-    echo "http://${PUBLIC_DNS}:8080/$ZIP_NAME.zip";
+    echo "http://${PUBLIC_DNS}:8042/$ZIP_NAME.zip";
     echo "Ctr + C when finished";
-    npx http-server -p 8080 > /dev/null;
+    python3 -m http.server 8042;
 }
