@@ -63,7 +63,6 @@ export PATH="/home/ubuntu/.poetry/bin:$PATH"
 EOF
 chown -R ubuntu: /home/ubuntu/.poetry
 
-rm ~/get-poetry.py
 # - updates the shell to account for poetry
 source /etc/profile.d/bashrc_python.sh
 
