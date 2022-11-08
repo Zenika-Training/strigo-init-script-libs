@@ -50,7 +50,7 @@ systemctl enable --now code-server@ubuntu
 
 # Display code-server password in terminal
 cat <<\EOF > /etc/profile.d/code-server-terminal.sh
-if [ $USER = ubuntu ]; then
+if [ "$USER" = "ubuntu" ]; then
   echo -ne '\nCode-server '
   grep '^password:' ~/.config/code-server/config.yaml
   echo
@@ -67,7 +67,7 @@ if [ "{{ .STRIGO_USER_EMAIL }}" = "{{ .STRIGO_EVENT_HOST_EMAIL }}" ]; then
   fi
 
   cat << EOF >> /etc/profile.d/code-server-terminal.sh
-if [ \$USER = ubuntu ]; then
+if [ "\$USER" = "ubuntu" ]; then
   echo -e "${code_server_version_message}. Trainees do not see this message."
 fi
 EOF
