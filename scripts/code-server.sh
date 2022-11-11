@@ -21,7 +21,7 @@ set -e
 # Install code-server (last released version by default)
 # https://github.com/coder/code-server/blob/main/docs/install.md#debian-ubuntu
 apt-get update
-apt-get install -y curl
+apt-get install -y curl jq
 last_code_server_release=$(curl -sL -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/coder/code-server/releases/latest | grep -Po '/code-server/releases/tag/v\K[^"]*')
 code_server_version=${code_server_version:-${last_code_server_release}}
 curl -fsSLo /tmp/code-server.deb "https://github.com/coder/code-server/releases/download/v${code_server_version}/code-server_${code_server_version}_amd64.deb"
@@ -50,7 +50,7 @@ systemctl enable --now code-server@ubuntu
 
 # Display code-server password in terminal
 cat <<\EOF > /etc/profile.d/code-server-terminal.sh
-if [ $USER = ubuntu ]; then
+if [ "$USER" = "ubuntu" ]; then
   echo -ne '\nCode-server '
   grep '^password:' ~/.config/code-server/config.yaml
   echo
@@ -67,7 +67,7 @@ if [ "{{ .STRIGO_USER_EMAIL }}" = "{{ .STRIGO_EVENT_HOST_EMAIL }}" ]; then
   fi
 
   cat << EOF >> /etc/profile.d/code-server-terminal.sh
-if [ \$USER = ubuntu ]; then
+if [ "\$USER" = "ubuntu" ]; then
   echo -e "${code_server_version_message}. Trainees do not see this message."
 fi
 EOF
@@ -86,12 +86,19 @@ if [[ ${code_server_extensions} && ${code_server_extensions-_} ]]; then
   done
 fi
 
-# Adds user settings, if any
-if [[ ${code_server_settings} && ${code_server_settings-_} ]]; then
-  mkdir --parent /home/ubuntu/.local/share/code-server/User/
-  echo ${code_server_settings} > /home/ubuntu/.local/share/code-server/User/settings.json
-  chown -R ubuntu: /home/ubuntu/.local/
-fi
+# Adds user settings
+code_server_base_settings='{
+  "workbench.startupEditor": "none",
+  "security.workspace.trust.enabled": false,
+  "telemetry.enableTelemetry": false,
+  "telemetry.telemetryLevel": "off",
+  "files.exclude": {
+    "**/.*": true
+  }
+}'
+mkdir --parent /home/ubuntu/.local/share/code-server/User/
+echo "${code_server_base_settings}" "${code_server_settings:-{\}}" | jq --slurp '.[0] * .[1]' > /home/ubuntu/.local/share/code-server/User/settings.json
+chown -R ubuntu: /home/ubuntu/.local/
 
 # Force restart session to reload terminal
 loginctl terminate-user ubuntu
