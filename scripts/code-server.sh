@@ -93,7 +93,7 @@ code_server_base_settings='{
   "telemetry.enableTelemetry": false,
   "telemetry.telemetryLevel": "off",
   "files.exclude": {
-    "**/.*": true
+    "**/.*": { "when": ".bashrc" }
   }
 }'
 mkdir --parent /home/ubuntu/.local/share/code-server/User/
