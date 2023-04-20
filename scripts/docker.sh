@@ -2,11 +2,16 @@
 
 # https://docs.docker.com/engine/install/ubuntu/
 
+# Define these optional variables if you want to customize the default installation:
+# - the JSON content of daemon.json settings
+# docker_extra_settings='{"exec-opts":["native.cgroupdriver=systemd"]}'
+
 # Uninstall old versions
 dpkg --purge docker docker-engine docker.io containerd runc
 apt-get autoremove --purge -y
 apt-get update
 apt-get install -y \
+    jq \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -24,16 +29,15 @@ apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # Enable containers log rotation and compression
-cat <<EOF > /etc/docker/daemon.json
-{
+docker_base_settings='{
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "5k",
     "max-file": "3",
     "compress": "true"
   }
-}
-EOF
+}'
+echo "${docker_base_settings}" "${docker_extra_settings:-{\}}" | jq --slurp '.[0] * .[1]' > /etc/docker/daemon.json
 systemctl restart docker
 
 # Enable user to use Docker
