@@ -3,8 +3,7 @@
 # failfast
 set -e
 
-# Define these 3 optional variables if you want to customize the default installation,
-# then copy-paste the remainder of the script:
+# Define these optional variables if you want to customize the default installation:
 # - the version of code-server to install (leave undefined to install the last one)
 # code_server_version=3.7.2
 # - the port of code-server (default: 9999)
