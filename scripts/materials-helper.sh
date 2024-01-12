@@ -2,7 +2,7 @@
 
 apt-get update
 apt-get install -y --no-install-recommends unzip python3 python3-pip
-pip3 install gdown
+pip3 install gdown==4.6.3
 
 GDOWN_RETRY_MAX=5
 
