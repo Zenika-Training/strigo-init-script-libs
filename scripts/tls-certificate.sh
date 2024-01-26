@@ -13,9 +13,25 @@ certbot certonly --non-interactive --agree-tos --register-unsafely-without-email
    ${ZEROSSL_OPTS} \
   --standalone --cert-name labs.strigo.io --domain '{{ .STRIGO_RESOURCE_DNS }}'
 
+if [ ! -f /etc/letsencrypt/live/labs.strigo.io/privkey.pem ]; then
+  # Fallback to self-signed certificate
+  mkdir -p /etc/letsencrypt/{live,archive}/labs.strigo.io/
+  openssl req -newkey rsa:2048 -x509 -days 7 -nodes \
+    -subj "/CN={{ .STRIGO_RESOURCE_DNS }}" \
+    -addext "subjectAltName=DNS:{{ .STRIGO_RESOURCE_DNS }},IP:${PUBLIC_IP:-127.0.0.1}" \
+    -addext "keyUsage=critical,digitalSignature,keyEncipherment" \
+    -addext "extendedKeyUsage=serverAuth,clientAuth" \
+    -addext "certificatePolicies=2.23.140.1.2.1" \
+    -keyout /etc/letsencrypt/archive/labs.strigo.io/privkey.pem \
+    -out /etc/letsencrypt/archive/labs.strigo.io/cert.pem
+  cp /etc/letsencrypt/archive/labs.strigo.io/cert.pem /etc/letsencrypt/archive/labs.strigo.io/chain.pem
+  cp /etc/letsencrypt/archive/labs.strigo.io/cert.pem /etc/letsencrypt/archive/labs.strigo.io/fullchain.pem
+  ln -s /etc/letsencrypt/archive/labs.strigo.io/* /etc/letsencrypt/live/labs.strigo.io/
+fi
+
 # Give read access to ubuntu user
 setfacl --modify user:ubuntu:rX /etc/letsencrypt/{live,archive}
-setfacl --modify user:ubuntu:rX /etc/letsencrypt/archive/labs.strigo.io/privkey1.pem
+setfacl --modify user:ubuntu:rX /etc/letsencrypt/archive/labs.strigo.io/privkey*.pem
 
 # Set env vars to TLS files
 cat <<\EOF > /etc/profile.d/tls_certificate.sh
