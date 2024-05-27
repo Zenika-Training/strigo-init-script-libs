@@ -11,7 +11,7 @@ if [[ -n "${ZEROSSL_EAB_KID}" && -n "${ZEROSSL_EAB_HMAC_KEY}" ]]; then
 fi
 certbot certonly --non-interactive --agree-tos --register-unsafely-without-email \
    ${ZEROSSL_OPTS} \
-  --standalone --cert-name labs.strigo.io --domain '{{ .STRIGO_RESOURCE_DNS }}'
+  --standalone --cert-name labs.strigo.io --domain '{{ .STRIGO_RESOURCE_DNS }}' || true
 
 if [ ! -f /etc/letsencrypt/live/labs.strigo.io/privkey.pem ]; then
   # Fallback to self-signed certificate
