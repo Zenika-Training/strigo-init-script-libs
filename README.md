@@ -10,6 +10,15 @@ Refer to [Variable Reference doc](http://help.strigo.io/en/articles/4242341-inje
 
 Some of the variables can be added as environment variables through the [`strigo.sh` script](scripts/strigo.sh) or [`strigo.ps1` Windows script](win_scripts/strigo.ps1).
 
+Strigo interfaces buttons generate reverse proxies with a custom domain for each. This domain can be found by concatenating `.STRIGO_INSTANCE_ID` and `.STRIGO_RESOURCE_<x>_WEB_INTERFACE_<y>_ID` where `<x>` is the resource number and `<y>` is the webview number. Then you need to switch them to lowercase (Example: `https://kgqzbjtz2amdgnrsd-dthc88ohrtgnp76jd.rp.strigo.io/`).
+
+For example, here is what is done in the Grafana training:
+```shell
+cat <<\EOF >> /etc/profile.d/00_strigo_context.sh
+export GRAFANA_HOST=$(echo -n "{{ .STRIGO_INSTANCE_ID }}-{{ .STRIGO_RESOURCE_0_WEB_INTERFACE_2_ID }}.rp.strigo.io" | tr '[:upper:]' '[:lower:]')
+EOF
+```
+
 ## Windows machine
 
 You need to start and end the init script in Strigo by `<powershell>` and `</powershell>` respectively. \
