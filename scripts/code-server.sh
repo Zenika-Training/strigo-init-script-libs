@@ -51,8 +51,8 @@ chown -R ${code_server_user}: ${code_server_user_homedir}/.config/
 systemctl enable --now code-server@${code_server_user}
 
 # Display code-server password in terminal
-cat <<\EOF > /etc/profile.d/code-server-terminal.sh
-if [ "$USER" = "${code_server_user}" ]; then
+cat << EOF > /etc/profile.d/code-server-terminal.sh
+if [ "\$USER" = "${code_server_user}" ]; then
   echo -ne '\nCode-server '
   grep '^password:' ~/.config/code-server/config.yaml
   echo
