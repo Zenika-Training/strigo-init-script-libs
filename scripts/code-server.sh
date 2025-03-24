@@ -26,30 +26,33 @@ code_server_version=${code_server_version:-${last_code_server_release}}
 curl -fsSLo /tmp/code-server.deb "https://github.com/coder/code-server/releases/download/v${code_server_version}/code-server_${code_server_version}_amd64.deb"
 apt-get install -y /tmp/code-server.deb
 
+code_server_user=${code_server_user:-ubuntu}
+code_server_user_homedir=$(getent passwd ${code_server_user} | cut -d: -f6)
+
 # Setup code-server
-mkdir --parent /home/ubuntu/.config/code-server/
-cat << EOF > /home/ubuntu/.config/code-server/config.yaml
+mkdir --parent ${code_server_user_homedir}/.config/code-server/
+cat << EOF > ${code_server_user_homedir}/.config/code-server/config.yaml
 bind-addr: {{ .STRIGO_RESOURCE_DNS }}:${code_server_port:-9999}
 auth: password
 password: '{{ .STRIGO_WORKSPACE_ID }}'
 disable-telemetry: true
 EOF
 if [ -n "${code_server_tls_cert_path}" ] && [ -n "${code_server_tls_key_path}" ]; then
-  cat << EOF >> /home/ubuntu/.config/code-server/config.yaml
+  cat << EOF >> ${code_server_user_homedir}/.config/code-server/config.yaml
 cert: ${code_server_tls_cert_path}
 cert-key: ${code_server_tls_key_path}
 EOF
 elif [ -n "${code_server_tls_cert_path}" ] || [ -n "${code_server_tls_chain_path}" ]; then
   echo "One of TLS key or cert is missing, skipping TLS configuration" >&2
 fi
-chown -R ubuntu: /home/ubuntu/.config/
+chown -R ${code_server_user}: ${code_server_user_homedir}/.config/
 
 # Enable and start code-server
-systemctl enable --now code-server@ubuntu
+systemctl enable --now code-server@${code_server_user}
 
 # Display code-server password in terminal
-cat <<\EOF > /etc/profile.d/code-server-terminal.sh
-if [ "$USER" = "ubuntu" ]; then
+cat << EOF > /etc/profile.d/code-server-terminal.sh
+if [ "\$USER" = "${code_server_user}" ]; then
   echo -ne '\nCode-server '
   grep '^password:' ~/.config/code-server/config.yaml
   echo
@@ -66,7 +69,7 @@ if [ "{{ .STRIGO_USER_EMAIL }}" = "{{ .STRIGO_EVENT_HOST_EMAIL }}" ]; then
   fi
 
   cat << EOF >> /etc/profile.d/code-server-terminal.sh
-if [ "\$USER" = "ubuntu" ]; then
+if [ "\$USER" = "${code_server_user}" ]; then
   echo -e "${code_server_version_message}. Trainees do not see this message."
 fi
 EOF
@@ -76,7 +79,7 @@ fi
 if [[ ${code_server_extensions} && ${code_server_extensions-_} ]]; then
   code_server_extensions_array=($code_server_extensions)
   for code_server_extension in ${code_server_extensions_array[@]}; do
-    sudo -iu ubuntu code-server --install-extension ${code_server_extension}
+    sudo -iu ${code_server_user} code-server --install-extension ${code_server_extension}
 
     if [ "${code_server_extension}" = "coenraads.bracket-pair-colorizer-2" ]; then
       # fixes bracket colorization (https://github.com/coder/code-server/issues/544#issuecomment-776139127) until code-server 3.11?
@@ -95,9 +98,9 @@ code_server_base_settings='{
     "**/.*": { "when": ".bashrc" }
   }
 }'
-mkdir --parent /home/ubuntu/.local/share/code-server/User/
-echo "${code_server_base_settings}" "${code_server_settings:-{\}}" | jq --slurp '.[0] * .[1]' > /home/ubuntu/.local/share/code-server/User/settings.json
-chown -R ubuntu: /home/ubuntu/.local/
+mkdir --parent ${code_server_user_homedir}/.local/share/code-server/User/
+echo "${code_server_base_settings}" "${code_server_settings:-{\}}" | jq --slurp '.[0] * .[1]' > ${code_server_user_homedir}/.local/share/code-server/User/settings.json
+chown -R ${code_server_user}: ${code_server_user_homedir}/.local/
 
 # Force restart session to reload terminal
-loginctl terminate-user ubuntu
+loginctl terminate-user ${code_server_user}

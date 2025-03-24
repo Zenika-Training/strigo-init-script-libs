@@ -3,6 +3,17 @@
 
 The code-server installation and initialization script (see [code-server.sh](code-server.sh)) allows different levels of customization:
 
+### Code-server user
+
+Specify the **user running `code-server`** by defining the `code_server_user` variable.
+Otherwise it runs as `ubuntu`.
+
+Example:
+
+```sh
+code_server_user='root'
+```
+
 ### Code-server version
 
 Specify the **desired version of `code-server`** by defining the `code_server_version` variable.
