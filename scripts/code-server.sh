@@ -102,5 +102,5 @@ mkdir --parent ${code_server_user_homedir}/.local/share/code-server/User/
 echo "${code_server_base_settings}" "${code_server_settings:-{\}}" | jq --slurp '.[0] * .[1]' > ${code_server_user_homedir}/.local/share/code-server/User/settings.json
 chown -R ${code_server_user}: ${code_server_user_homedir}/.local/
 
-# Force restart session to reload terminal
-loginctl terminate-user ${code_server_user}
+# Force restart session to reload terminal(always ubuntu user)
+loginctl terminate-user ubuntu
